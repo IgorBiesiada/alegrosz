@@ -9,21 +9,31 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+import dj_database_url
+from dotenv import load_dotenv
+
+
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+
+
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2oi*u99^rv!cj6&@xk=n-h@pz^b3tlrdk3$xoq5zs!rzw^!pv8'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', default=0)
 
 ALLOWED_HOSTS = []
 
@@ -37,6 +47,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #3rd part apps
+
+
+    #local apps
+    'home.apps.HomeConfig',
+    'contact.apps.ContactConfig'
 ]
 
 MIDDLEWARE = [
@@ -80,6 +97,14 @@ DATABASES = {
     }
 }
 
+DATABASE_URL = os.environ.get('DB_CONNECTION_STRING')
+db_from_env = dj_database_url.config(
+    default=DATABASE_URL,
+    conn_max_age=500,
+    ssl_require=False
+)
+
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
