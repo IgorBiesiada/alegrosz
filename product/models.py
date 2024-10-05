@@ -10,9 +10,9 @@ class Modified(models.Model):
         abstract = True
 
 class Product(Modified):
-    name = models.CharField(max_length=100) # <input type='text'>
-    description = models.TextField(default="", blank=True) #<textarea></textarea>
-    price = models.DecimalField(max_digits=6, decimal_places=2) #<input type='number'>
+    name = models.CharField(max_length=100)     # <input type='text'>
+    description = models.TextField(default="", blank=True)          #<textarea></textarea>
+    price = models.DecimalField(max_digits=6, decimal_places=2)         #<input type='number'>
     stock_count = models.IntegerField(help_text="How many items are currently in stock")
     sku = models.CharField(max_length=20, verbose_name="Stock Keeping Unit")
     slug = models.SlugField(blank=True, unique=True)

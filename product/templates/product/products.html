@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{% block title %}Product List{% endblock %}
+
+{% block container %}
+
+    <h1>Product List</h1>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for product in product %}
+            <div class="col">
+                <div class="card d-flex">
+                    {% if product.images.first %}
+                        <img src="/media/{{ product.images.first }}"  class="card-img-top" alt="{{ product.name }}">
+                    {% else %}
+                        <img src="{% static 'images/no_img.png' %}"  class="card-img-top" alt="{{ product.name }}">
+                    {% endif %}
+                    <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    {% if product.description|length > 50 %}
+                        <p class="card-text">{{ product.description|slice:"50" }}...</p>
+                    {% else %}
+                        <p class="card-text">{{ product.description }}</p>
+                    {% endif %}
+                        <a href="{% url 'product:product_detail' pk=product.id %}" class="btn btn-primary">Show details</a>
+                        <p class="card-text">
+                            Price: {{ product.price }} $
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    <div>
+
+{% endblock %}
